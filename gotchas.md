@@ -42,17 +42,6 @@ GeoJSON files and data JSONs use different state names for 4 Mexican states. Bui
 ### Industrial parks state names
 DataMexico uses accent-free full names (e.g., "Coahuila de Zaragoza"). Pipelines that join parks to other datasets need 3 separate state name maps: one for energy profiles, one for RCA/DENUE data, and one for special cases like "Estado de Mexico" vs "Mexico" in RCA data.
 
-## D3 / Browser
-
-### Headless screenshots
-Content more than ~8000px down the page renders black in headless browser screenshots. Workaround: clone the target slide to the top of the DOM before screenshotting.
-
-### `const` redeclaration
-If a draw function already declares a `const` variable in scope, do not redeclare it. JavaScript will throw a SyntaxError. Reuse the existing variable or use a different name.
-
-### D3 transitions in headless
-Transitions do not fire in headless preview environments. Use `.interrupt()` and set attributes directly for verification.
-
 ## FDI Data (fDi Markets)
 
 ### Investment figures include multi-phase totals
@@ -66,3 +55,7 @@ Most rows use `FDI{digits}` IDs from fDi Markets, but some use custom IDs (e.g.,
 
 ### Cancelled/suspended projects need cancellation-specific sources
 For projects with status "Cancelled" or "Suspended", the original announcement URL confirms the project existed but not that it was cancelled. Search specifically for cancellation news (e.g., "Northvolt Heide cancelled" or "LG Indonesia battery exit").
+
+## See also
+
+- `gotchas-frontend.md` -- D3, headless browser, and HTML rendering issues

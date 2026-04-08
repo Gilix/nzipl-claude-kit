@@ -64,13 +64,9 @@ The `/enrich-fdi` command works on any xlsx with the same column structure. To a
 
 ## Progress tracking
 
-After each session, note in this file or in `discoveries.md`:
-- Last row processed
-- Total rows sourced so far
-- Any patterns noticed (e.g., "Solar projects in India post-2018 have excellent coverage on Mercom India")
+Live state is in `tasks/enrich-fdi-progress.json`. After each session, update that file:
+- Top-level counters: `rows_processed`, `rows_fully_sourced`, `rows_partially_sourced`, `rows_no_result`
+- `next_unsourced_row` (so the next operator knows where to start)
+- Append a new entry to the `batches` array
 
-### Current progress
-
-| Date | Rows processed | Fully sourced | Partial | No result | Operator |
-|------|---------------|---------------|---------|-----------|----------|
-| 2026-04-08 | 20 (rows sorted by investment desc, $3.2B-$11.5B) | 12 | 8 | 0 | Gilberto |
+Note any patterns in `discoveries.md`.

@@ -1,0 +1,23 @@
+{
+  "task": "FDI Source Enrichment",
+  "total_rows": 698,
+  "rows_processed": 20,
+  "rows_fully_sourced": 12,
+  "rows_partially_sourced": 8,
+  "rows_no_result": 0,
+  "next_unsourced_row": 21,
+  "priority": "largest",
+  "last_updated": "2026-04-08",
+  "last_operator": "Gilberto",
+  "batches": [
+    {
+      "date": "2026-04-08",
+      "rows_processed": 20,
+      "fully_sourced": 12,
+      "partial": 8,
+      "no_result": 0,
+      "operator": "Gilberto",
+      "notes": "Rows sorted by investment desc, $3.2B-$11.5B"
+    }
+  ]
+}

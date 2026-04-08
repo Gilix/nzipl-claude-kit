@@ -111,11 +111,12 @@ Use the `/nzipl-design` skill for all visual formatting. Key tokens:
 
 | Task | File | Status |
 |------|------|--------|
-| FDI Source Enrichment | `tasks/enrich-fdi.md` | In progress (20/698 rows, top investments done) |
+| FDI Source Enrichment | `tasks/enrich-fdi.md` | In progress. Live count: `tasks/enrich-fdi-progress.json` |
 
 ## References
 
 - `glossary.md` -- Terms, acronyms, internal vocabulary
 - `gotchas.md` -- Known data/API issues that cause silent failures
+- `gotchas-frontend.md` -- D3, headless browser, and HTML rendering issues
 - `discoveries.md` -- Team-contributed findings (append here when you learn something)
 - `CONTRIBUTING.md` -- How to add to this kit

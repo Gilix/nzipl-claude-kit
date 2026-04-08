@@ -7,8 +7,10 @@ This kit is the team's shared knowledge layer for Claude Code. It gets smarter a
 **Add to discoveries.md.** Found a useful data source? Built a reusable command? Hit an API quirk? Figured out a methodology pattern? Append a line:
 
 ```
-- 2026-04-15 | Your Name | One-line description of what you learned
+- 2026-04-15 | Your Name | One-line description of what you learned [pipeline:enrichment] [ref:PR#20]
 ```
+
+Tags are optional. See `discoveries.md` for the full schema.
 
 Push directly to main. One line, enough context that someone who hasn't seen the issue can understand it. This is the primary way the kit grows.
 
@@ -16,7 +18,7 @@ Push directly to main. One line, enough context that someone who hasn't seen the
 
 **Add a glossary term.** If you're using a term that isn't in `glossary.md` and a colleague might not know it, add it via PR. Follow the existing table format.
 
-**Promote a discovery to gotchas.md.** If a discovery in `discoveries.md` is significant enough to be a permanent reference (it affects pipeline correctness or causes silent failures), write it up in `gotchas.md` with a heading, explanation, and workaround. Submit as PR.
+**Promote a discovery to gotchas.md (or gotchas-frontend.md).** If a discovery in `discoveries.md` is significant enough to be a permanent reference, write it up with a heading, explanation, and workaround. Data/API issues go to `gotchas.md`; D3/browser/HTML rendering issues go to `gotchas-frontend.md`. Submit as PR.
 
 **Update the design skill.** If you find a pattern that should be part of the design system (a new chart type, a component variant, a responsive pattern), submit a PR to the relevant file in `.claude/skills/nzipl-design/references/`.
 
@@ -34,5 +36,5 @@ Push directly to main. One line, enough context that someone who hasn't seen the
 Gilberto reviews discoveries.md periodically and promotes significant entries to gotchas.md or glossary.md. If you think something should be promoted urgently, tag it in your discovery line:
 
 ```
-- 2026-04-15 | Your Name | [URGENT] Pipeline breaks if you use single-month DENUE queries
+- 2026-04-15 | Your Name | [URGENT] Pipeline breaks if you use single-month DENUE queries [pipeline:denue]
 ```

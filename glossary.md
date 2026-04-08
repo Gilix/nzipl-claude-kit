@@ -68,3 +68,17 @@
 | TopoJSON | Compressed geographic data format. Used for municipality boundaries |
 | Enclave effect | High-ECI location with persistent poverty due to concentrated industry that inflates complexity without distributing welfare |
 | Capability dividend | Above-median ECI + below-median poverty. Where productive accumulation has translated into lower deprivation |
+
+## Deliverable Sequence
+
+How sprints, outputs, and downstream consumers connect:
+
+| Sprint | Output | Feeds into |
+|--------|--------|-----------|
+| S0 (Play Selection) | Play Selector | S1 scope: which 2-3 plays to develop |
+| S1 (Play Cards) | Play Cards (2-3 per country) | S2 constraint analysis; CICE platform content |
+| S2 (Constraint Maps) | Constraint Maps + Finance Annex | Policy recommendations; DFI engagement |
+| S3 (Platform Products) | Cross-country Comparators, Chart Packs, Methods Notes | CICE platform; client presentations |
+| S4 (QA and Synthesis) | Final packaged deliverables | Publication; handoff to JHU |
+
+Each country follows this sequence independently over a 5-month production + 1-month QA cycle. Infrastructure Maps are cross-cutting (not sprint-bound) and support all deliverable types with geographic context.

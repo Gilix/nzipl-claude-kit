@@ -12,7 +12,8 @@ Every Claude Code session opened from this repo loads `CLAUDE.md`, which contain
 |------|---------|
 | `CLAUDE.md` | Lab context: data sources, sprint structure, API auth patterns, deliverable standards |
 | `glossary.md` | 31 acronyms and 22 internal terms used across the Lab's work |
-| `gotchas.md` | 11 documented data/API issues that cause silent failures, with workarounds |
+| `gotchas.md` | Data and API issues that cause silent failures, with workarounds |
+| `gotchas-frontend.md` | D3, headless browser, and HTML rendering issues |
 | `discoveries.md` | Running log of team-contributed findings (append-only) |
 | `CONTRIBUTING.md` | How to add to this kit |
 | `.claude/skills/nzipl-design/` | Design system skill: tokens, HTML patterns, chart styles, PPTX layouts |

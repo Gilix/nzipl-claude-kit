@@ -90,12 +90,10 @@ Write URLs back to the xlsx using openpyxl. Save after each batch.
 
 ### 6. Log progress
 
-After each batch, report:
-- Rows processed: N
-- Rows fully sourced (all P-W filled): N
-- Rows partially sourced: N
-- Rows with no results: N
-- Next unsourced row number for the next batch
+After each batch, update `tasks/enrich-fdi-progress.json`:
+1. Update top-level counters (`rows_processed`, `rows_fully_sourced`, `rows_partially_sourced`, `rows_no_result`, `next_unsourced_row`, `last_updated`, `last_operator`)
+2. Append a new entry to the `batches` array with batch-specific counts and notes
+3. Report the updated totals to the user
 
 ## Quality rules
 
