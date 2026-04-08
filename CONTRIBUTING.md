@@ -4,13 +4,13 @@ This kit is the team's shared knowledge layer for Claude Code. It gets smarter a
 
 ## Quick contributions (no PR needed)
 
-**Add a discovery.** When you find a data quirk, API behavior, or methodology insight that would save someone else time, append a line to `discoveries.md`:
+**Add to discoveries.md.** Found a useful data source? Built a reusable command? Hit an API quirk? Figured out a methodology pattern? Append a line:
 
 ```
-- 2026-04-15 | Your Name | One-line description of what you found
+- 2026-04-15 | Your Name | One-line description of what you learned
 ```
 
-Push directly to main. Keep it to one line. Include enough context that someone who hasn't seen the issue can understand it.
+Push directly to main. One line, enough context that someone who hasn't seen the issue can understand it. This is the primary way the kit grows.
 
 ## Structured contributions (PR)
 

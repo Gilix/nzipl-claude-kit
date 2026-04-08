@@ -1,14 +1,22 @@
 # Discoveries
 
-Team-contributed findings about data sources, APIs, methodology, and tooling. When you learn something that would save a colleague time, append it here.
+The Lab's collective knowledge log. When you learn something that would make a colleague's Claude session smarter, add it here. This covers anything worth sharing:
 
-If a discovery is significant enough to become a permanent reference, it will be promoted to `gotchas.md` or `glossary.md` during periodic reviews.
+- A data source you found useful
+- An API behavior (working or broken)
+- A methodology insight or pattern that worked
+- A reusable command or pipeline you built
+- A gotcha that cost you time
+
+Significant entries get promoted to `gotchas.md` or `glossary.md` during periodic reviews.
 
 ## Format
 
 ```
 - YYYY-MM-DD | Author | One-line finding
 ```
+
+Append and push. No PR needed.
 
 ## Log
 
