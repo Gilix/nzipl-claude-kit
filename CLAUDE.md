@@ -4,7 +4,7 @@ Shared context for the NZIPL team. This file loads automatically in any Claude C
 
 ## About the Lab
 
-The Net Zero Industrial Policy Lab at Johns Hopkins University identifies and sequences clean industrial opportunities for countries using economic complexity methods. The Lab works with governments, multilateral institutions, and development finance partners to translate complexity analysis into actionable industrial policy, with active programs focused on Brazil, India, and Mexico.
+The Net Zero Industrial Policy Lab at Johns Hopkins University identifies and sequences clean industrial opportunities for countries using economic complexity methods. The Lab works with governments, multilateral institutions, and development finance partners to translate capabilities analysis into actionable industrial policy, with active programs focused on Brazil, India, and Mexico.
 
 Outputs span interactive analytical products (play cards, infrastructure maps, cross-country comparators) and traditional research formats (policy briefs, working papers, methodological notes). This kit supports the Lab's tooling and shared conventions; the research itself lives in published work and project-specific repositories.
 
@@ -16,7 +16,9 @@ Platform: cice.netzeropolicylab.com (Clean Industrial Capabilities Explorer)
 Current threads the Lab is working across:
 
 - **Clean industrial policy sequencing** — which plays to develop first, in what order, with what preconditions
-- **Subnational industrial complexity** — state- and municipality-level RCA, relatedness density, capability clusters
+- **Subnational industrial policy** — state industrial policies in Mexico
+- **Subnational industrial capabilities** — state- and municipality-level RCA, relatedness density, capability clusters
+- **Green investment** — How can countries sustain investment at home to create jobs and boost domestic growth 
 - **Finance architecture for industrial policy** — instruments, actors, bottlenecks, and the coordination problem
 - **Cross-country comparison methods** — standardizing indicators so Brazil, India, and Mexico are comparable
 
@@ -26,7 +28,7 @@ This kit is a shared resource. As Lab members contribute, add yourself and your 
 
 | Member | Focus |
 |--------|-------|
-| Gilberto Garcia-Vazquez | Kit maintainer. Mexico pipelines: play selection, infrastructure map, play cards |
+| Gilberto García-Vazquez | Mexico, India and Brazil pipelines: play selection, energy infrastructure map, play cards |
 | _Add yours..._ | _e.g., Brazil research, CICE development, finance architecture_ |
 
 ## How this kit fits
