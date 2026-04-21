@@ -2,14 +2,40 @@
 
 Shared context for the NZIPL team. This file loads automatically in any Claude Code session opened from this repo.
 
-## The Lab
+## About the Lab
 
-The Net Zero Industrial Policy Lab at Johns Hopkins University identifies and sequences clean industrial opportunities for countries using economic complexity methods. Primary outputs are Play Cards, Constraint Maps, and Chart Packs delivered as interactive HTML scrollytelling and slide decks.
+The Net Zero Industrial Policy Lab at Johns Hopkins University identifies and sequences clean industrial opportunities for countries using economic complexity methods. The Lab works with governments, multilateral institutions, and development finance partners to translate complexity analysis into actionable industrial policy, with active programs focused on Brazil, India, and Mexico.
+
+Outputs span interactive analytical products (play cards, infrastructure maps, cross-country comparators) and traditional research formats (policy briefs, working papers, methodological notes). This kit supports the Lab's tooling and shared conventions; the research itself lives in published work and project-specific repositories.
 
 Website: netzeropolicylab.com
 Platform: cice.netzeropolicylab.com (Clean Industrial Capabilities Explorer)
 
-## Key Outputs
+## Research agenda
+
+Current threads the Lab is working across:
+
+- **Clean industrial policy sequencing** — which plays to develop first, in what order, with what preconditions
+- **Subnational industrial complexity** — state- and municipality-level RCA, relatedness density, capability clusters
+- **Finance architecture for industrial policy** — instruments, actors, bottlenecks, and the coordination problem
+- **Cross-country comparison methods** — standardizing indicators so Brazil, India, and Mexico are comparable
+
+## Team
+
+This kit is a shared resource. As Lab members contribute, add yourself and your focus below.
+
+| Member | Focus |
+|--------|-------|
+| Gilberto Garcia-Vazquez | Kit maintainer. Mexico pipelines: play selection, infrastructure map, play cards |
+| _Add yours..._ | _e.g., Brazil research, CICE development, finance architecture_ |
+
+## How this kit fits
+
+The kit is tooling, not a source of truth for Lab research positions. It accumulates conventions (data source auth patterns, naming norms, design tokens), reusable pipelines, and hard-won gotchas so the next person doesn't rediscover them. Research outputs — papers, briefs, presentations, datasets — stay in their own repos and publication channels. When in doubt: *can this knowledge save a colleague an hour next Tuesday?* If yes, it belongs here.
+
+## Deliverable patterns
+
+The interactive analytical products the kit currently supports. Traditional research formats (papers, briefs, conference talks, methodological notes) sit alongside these; the kit focuses on what benefits from shared tooling.
 
 | Deliverable | Format | Description |
 |-------------|--------|-------------|
@@ -31,13 +57,15 @@ Each country follows a 5-month production + 1-month QA cycle:
 | S3 | Platform Products | Cross-country comparators, methods notes |
 | S4 | QA and Synthesis | Review, consistency checks, final packaging |
 
-## Country Status
+## Kit coverage by country
 
-| Country | Status | Notes |
-|---------|--------|-------|
-| Mexico | Active (S1) | Top 3 plays: Auto Supplier Upgrading, EV Components, Grid Hardware |
-| Brazil | Planned | Illustrative plays in concept note, no data work started |
-| India | Planned | Illustrative plays in concept note, no data work started |
+Reflects what's *in this kit* — pipelines, data caches, deliverables that have been systematized for reuse. Research programs may be further along than the tooling suggests; add to this table as kit coverage expands.
+
+| Country | Kit status | Notes |
+|---------|-----------|-------|
+| Mexico | Active | Play selector, 3 play cards (Auto Supplier, EV Components, Grid Hardware), infrastructure map, 431-park scoring |
+| Brazil | Planned | Illustrative plays in concept note; pipelines not yet parameterized |
+| India | Planned | Illustrative plays in concept note; pipelines not yet parameterized |
 
 ## Data Sources
 
@@ -119,4 +147,6 @@ Use the `/nzipl-design` skill for all visual formatting. Key tokens:
 - `gotchas.md` -- Known data/API issues that cause silent failures
 - `gotchas-frontend.md` -- D3, headless browser, and HTML rendering issues
 - `discoveries.md` -- Team-contributed findings (append here when you learn something)
+- `prompts.md` -- Starter prompts for new team members
+- `pre-read.md` -- 5-min pre-session skim note (no install required)
 - `CONTRIBUTING.md` -- How to add to this kit

@@ -15,6 +15,8 @@ Every Claude Code session opened from this repo loads `CLAUDE.md`, which contain
 | `gotchas.md` | Data and API issues that cause silent failures, with workarounds |
 | `gotchas-frontend.md` | D3, headless browser, and HTML rendering issues |
 | `discoveries.md` | Running log of team-contributed findings (append-only) |
+| `prompts.md` | Starter prompts to try with Claude Code once the kit is cloned |
+| `pre-read.md` | 5-minute pre-session skim note (no install required; readable in a browser) |
 | `CONTRIBUTING.md` | How to add to this kit |
 | `.claude/skills/nzipl-design/` | Design system skill: tokens, HTML patterns, chart styles, PPTX layouts |
 | `.claude/commands/` | Reusable prompts for common tasks |
