@@ -73,12 +73,32 @@ Do not over-penalize broad HS codes. HS codes such as `847989`, `841989`, `84199
 
 Manual overrides are acceptable when the component description materially narrows a broad HS code to a better NAICS industry. The workbook must record the rationale.
 
+## Pipeline Order
+
+A full mapping refresh runs in this order. Each step is independent; rerun any one without rerunning earlier steps.
+
+1. `profile_workbook.py` — list sheets, headers, row counts, and type profiles of the source `.xlsx`. Use to learn the shape before writing the source-specific cleaning step.
+2. **Source-specific cleaning step** — read the source workbook, normalize HS and NAICS as text, extract candidate NAICS columns, write `csv/naics_hs_map.csv` and any companion tables. Not bundled because the sheet names, column names, and join keys are dataset-specific. See `outputs/sp_company_naics_hs_cleaning/scripts/clean_source.py` in GripPoint for one worked example against the S&P firm workbook.
+3. `add_review_fields.py` — add the five review workflow columns to `csv/naics_hs_map.csv`.
+4. `audit_mapping.py` — classify every row, flag exceptions, write the audit memo and row-level review CSVs.
+5. `build_streaming_workbook.py` — rebuild the analyst-facing `.xlsx` from the cleaned CSVs using a streaming writer (handles 300k+ rows without exhausting memory). Adds autofilters and frozen headers, writes a verification JSON.
+6. `inspect_output.py` — quick sanity check: sheet names plus sample rows.
+7. `validate_mapping_review.py` — CI-friendly check that all review columns are present with allowed values. Use non-strict mode while review is in progress; switch to `--strict` once the mapping is treated as production data.
+8. `compare_mapping_versions.py` — diff a new mapping CSV against the prior version by `mapping_id`. Produces added rows, removed rows, field-level change tables, and a Markdown changelog for the PR description.
+
 ## Bundled Resources
 
+- `scripts/profile_workbook.py`: profile a source `.xlsx` — sheets, headers, row counts, duplicate headers, sample values, type profiles. Read-only.
 - `scripts/add_review_fields.py`: add `mapping_method`, `candidate_source`, `override_reason`, `review_status`, and `reviewer` to a mapping CSV.
-- `scripts/audit_mapping.py`: audit mapping consistency and write review CSVs plus a Markdown memo.
+- `scripts/audit_mapping.py`: audit mapping consistency and write review CSVs plus a Markdown memo. Argparse-driven; supports `--final-col`, `--candidate-cols`, `--strict-review`.
+- `scripts/build_streaming_workbook.py`: rebuild the analyst-facing `.xlsx` from cleaned CSVs using openpyxl's streaming writer. Writes a verification JSON alongside the workbook.
+- `scripts/inspect_output.py`: print sheet names and sample rows of a rebuilt workbook for a quick sanity check.
+- `scripts/validate_mapping_review.py`: CI check for required review columns and allowed `mapping_method` / `review_status` values. `--strict` fails if any row remains `needs_review` or if accepted non-candidate matches lack `override_reason` / `reviewer`. `--output-json` writes a machine-readable result.
+- `scripts/compare_mapping_versions.py`: diff two mapping CSVs by `mapping_id` — added rows, removed rows, field-level changes, and a Markdown changelog. Useful as a PR-description input.
 - `references/matching-criteria.md`: criteria and examples for classification.
 - `references/automation-targets.md`: automation ideas and implementation patterns for future pipelines and CI.
+
+All scripts are stdlib + `pandas` (+ `openpyxl` for the workbook steps). No other dependencies.
 
 ## Output Standard
 
