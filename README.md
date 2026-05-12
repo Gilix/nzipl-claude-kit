@@ -21,6 +21,7 @@ Every Claude Code session opened from this repo loads `CLAUDE.md`, which contain
 | `.claude/skills/nzipl-design/` | Design system skill: tokens, HTML patterns, chart styles, PPTX layouts |
 | `.claude/skills/naics-hs-matching/` | NAICS-HS concordance audit skill: candidate matching, manual override review, workflow fields |
 | `.claude/commands/` | Reusable prompts for common tasks |
+| `examples/naics-hs-matching/` | Sanitized synthetic example package for the NAICS-HS matching workflow |
 | `tasks/` | Structured task definitions |
 
 ## Setup

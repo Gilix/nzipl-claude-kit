@@ -1,0 +1,3 @@
+audit_severity,audit_flags,mapping_method,candidate_source,candidate_naics6,review_status,override_reason,reviewer,mapping_id,technology,hs_code,component_name,role,stage,final_naics6,final_naics2022_definition,source_naics6,source_naics6_nace,source_naics6_all,split_weight
+high,unmapped_with_candidates,unmapped_with_candidates,candidate_set_available_no_final,333120;333132,needs_review,,,5,Synthetic Geothermal,843049,Well drilling rig,Final Product,Final Product,,,333120,333120,333120;333132,1
+medium,unmapped_no_candidates,unmapped_no_candidates,no_candidate_source,,needs_review,,,9,Synthetic Biofuel,440110,Wood waste feedstock,Raw Material,Upstream,,,,,,1
