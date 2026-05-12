@@ -1,0 +1,10 @@
+mapping_id,technology,hs_code,component_name,role,stage,final_naics6,final_naics2022_definition,source_naics6,source_naics6_nace,source_naics6_all,split_weight
+1,Synthetic Batteries,847989,Module assembly equipment,Process Equipment,Downstream,333248,All Other Industrial Machinery Manufacturing,333248,333242,333248;333242;335220,1
+2,Synthetic Batteries,391910,Separator film,Product Component,Midstream,326113,Unlaminated Plastics Film and Sheet Manufacturing,322220,322220,322220,1
+3,Synthetic Electrolyzers,854370,Control hardware,Product Component,Midstream,335314,Relay and Industrial Control Manufacturing,335999,333992,335999;333998;334510,1
+4,Synthetic Heat Pumps,841990,Heat exchanger parts,Product Component,Downstream,333415,HVAC and Refrigeration Equipment Manufacturing,333415,333415,333415;333414,1
+5,Synthetic Geothermal,843049,Well drilling rig,Final Product,Final Product,,,333120,333120,333120;333132,1
+6,Synthetic Biofuel,151490,Rapeseed oil feedstock,Raw Material,Upstream,311224,Oilseed Processing,,,,1
+7,Synthetic Wind,841989,Nacelle heat-treatment machinery,Process Equipment,Downstream,333994,Industrial Process Furnace and Oven Manufacturing,333998,333310,333998;333310;333248,0.5
+8,Synthetic Solar,841989,Polysilicon fluidized bed reactor,Process Equipment,Downstream,333248,All Other Industrial Machinery Manufacturing,333248,333310,333248;333310;333998,0.5
+9,Synthetic Biofuel,440110,Wood waste feedstock,Raw Material,Upstream,,,,,,1
