@@ -84,6 +84,7 @@ Reflects what's *in this kit* — pipelines, data caches, deliverables that have
 | OSM (earth-osm) | GeoJSON | Transmission lines, substations, generators | Public |
 | WRI GPPD | JSON | Power plants (277 plants, 62K MW for Mexico) | Public, v1.3 |
 | OpenDataSoft/INEGI | GeoJSON | Municipality boundaries | Public |
+| NZIPL EV Greenfield | `projects/nzipl/infra-mx/data/nzipl_ev_greenfield_global.json` | Verified global EV investment pipeline (three-tier sourced) | Manual JSON, CC-BY-4.0 |
 
 ### OEC API Reference
 
@@ -97,10 +98,11 @@ Reflects what's *in this kit* — pipelines, data caches, deliverables that have
 
 ### DataMexico API Reference
 
-- Base: `https://api.datamexico.org/tesseract/`
-- Endpoints: `/data` (cubes) and `/stats/rca` (specialization)
-- No auth required
-- **Critical**: The `/data` endpoint is missing manufacturing sectors (31-33). Use `/stats/rca` with multi-month parameter (e.g., `Month=20250522,20241126,20240523`) to get all sectors.
+- Base: `https://www.economia.gob.mx/datamexico/api/` (legacy `api.datamexico.org` is deprecated)
+- Endpoints: `/data` (cubes), `/stats/rca` (specialization, also the only path with full DENUE sector coverage)
+- No auth required, but set a browser User-Agent
+- **Critical**: The `/data` endpoint silently drops manufacturing (31-33), wholesale (43), info (51), professional services (54) from DENUE. Use `/stats/rca` with multi-month parameter (e.g., `Month=20250522,20241126,20240523`) to get all sectors.
+- **Full reference**: install the `datamexico-api` skill (this folder) for the curated 14-cube catalog, 12 gotchas, and 8 stdlib templates. The skill auto-triggers when Claude needs to write or extend a Mexico pipeline.
 
 ## Play Card Structure (8 Sections)
 
@@ -131,6 +133,15 @@ Use the `/nzipl-design` skill for all visual formatting. Key tokens:
 - Font: Archivo (headings 600-700, body 400)
 - Attribution: "Net Zero Industrial Policy Lab | Johns Hopkins University | netzeropolicylab.com"
 
+## Skills
+
+| Skill | Description |
+|-------|-------------|
+| `nzipl-design` | Apply the NZIPL/CICE design system to HTML, PPTX, and data visualizations. Dark Mantine theme, Archivo, green accent. |
+| `gather-ev-greenfield` | Gather and verify EV greenfield manufacturing investments worldwide into the Lab's public-citable dataset. Three-tier verification, dedup against BNEF + fDi Markets. Doubles as the training exercise for new Lab members. |
+| `datamexico-api` | Expert reference for the DataMexico API (Mexican subnational economic data via economia.gob.mx). Auto-triggers on DataMexico, DENUE, AMPIP industrial parks, INEGI economic census, ECI/PCI Mexico, municipality HS4 trade, FDI, CONEVAL. Curated 14 cubes + 12 gotchas + 8 stdlib templates, distilled from production pipelines. |
+| `naics-hs-matching` | Audit, clean, validate, and maintain NAICS-HS concordance mappings for economic complexity and clean technology work. Bundles a 7-step pipeline (profile → clean → review-fields → audit → build → inspect → validate → compare) with stdlib + pandas scripts. Auto-triggers on Green Dictionary mappings, S&P firm NAICS matching, candidate NAICS selection, and mapping review workflow columns. |
+
 ## Commands
 
 | Command | Description |
@@ -142,6 +153,7 @@ Use the `/nzipl-design` skill for all visual formatting. Key tokens:
 | Task | File | Status |
 |------|------|--------|
 | FDI Source Enrichment | `tasks/enrich-fdi.md` | In progress. Live count: `tasks/enrich-fdi-progress.json` |
+| EV Greenfield Global | `tasks/ev-greenfield-TEMPLATE.md` | Template. Copy to `tasks/ev-greenfield-<country>.md` per researcher. Dataset: `projects/nzipl/infra-mx/data/nzipl_ev_greenfield_global.json` |
 
 ## References
 
