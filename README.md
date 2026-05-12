@@ -19,6 +19,7 @@ Every Claude Code session opened from this repo loads `CLAUDE.md`, which contain
 | `pre-read.md` | 5-minute pre-session skim note (no install required; readable in a browser) |
 | `CONTRIBUTING.md` | How to add to this kit |
 | `.claude/skills/nzipl-design/` | Design system skill: tokens, HTML patterns, chart styles, PPTX layouts |
+| `.claude/skills/naics-hs-matching/` | NAICS-HS concordance audit skill: candidate matching, manual override review, workflow fields |
 | `.claude/commands/` | Reusable prompts for common tasks |
 | `tasks/` | Structured task definitions |
 
@@ -29,7 +30,7 @@ git clone https://github.com/Gilix/nzipl-claude-kit.git
 cd nzipl-claude-kit
 ```
 
-Open Claude Code. The context loads on session start. Run `/nzipl-design` to verify the skill is available.
+Open Claude Code. The context loads on session start. Run `/nzipl-design` to verify the design skill is available. Run `/audit-naics-hs` when reviewing a NAICS-HS mapping file.
 
 ## Contributing
 
