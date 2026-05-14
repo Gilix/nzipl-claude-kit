@@ -23,6 +23,7 @@ Every Claude Code session opened from this repo loads `CLAUDE.md`, which contain
 | `.claude/commands/` | Reusable prompts for common tasks |
 | `examples/naics-hs-matching/` | Sanitized synthetic example package for the NAICS-HS matching workflow |
 | `tasks/` | Structured task definitions |
+| `goodenough-feedback/` | Feedback rubric, submission guide, and session archive for the goodenough chatbot (private app, public feedback workflow) |
 
 ## Setup
 
