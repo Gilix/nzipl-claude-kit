@@ -33,7 +33,7 @@ Don't write anything else yet. You need evidence.
 
 Before any web search, run the dedup protocol from `references/dedup-protocol.md`.
 
-1. **BNEF check.** Load `projects/nzipl/data/nzipl_bnef_projects.json`. BNEF is Mexico-only; Wrocław won't be there. Quick visual scan confirms: no match.
+1. **BNEF check.** Load `projects/nzipl/infra-mx/data/nzipl_bnef_projects.json`. BNEF is Mexico-only; Wrocław won't be there. Quick visual scan confirms: no match.
 2. **FDI check.** Open `projects/nzipl/FDI_Combined.xlsx`. Search Battery rows with company `"LG"` and destination country Poland. This may return a row. If it does, capture the row number and tag the candidate `update-fdi`. If not, tag `new`.
 
 For this walkthrough, assume FDI has a matching row (likely — LG Chem Wrocław is a famously large FDI event). Say it's row 147. Log:
@@ -155,7 +155,7 @@ Open `references/red-flags.md`. For Wrocław, all flags clear:
 
 ## Step 14 — Write record
 
-Append to `projects/nzipl/data/nzipl_ev_greenfield_global.json`. Use a tool that preserves readable indentation. Re-read the file after write to verify it parses.
+Append to `projects/nzipl/infra-mx/data/nzipl_ev_greenfield_global.json`. Use a tool that preserves readable indentation. Re-read the file after write to verify it parses.
 
 ## Step 15 — Update progress
 

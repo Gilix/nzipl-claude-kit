@@ -1,6 +1,6 @@
 # Methodology rationale
 
-This document explains the design choices behind the gather-ev-greenfield skill: why three tiers, why the status-tier matrix is enforced mechanically, and how the skill resolves conflicts between company, government, and independent-press sources. Read alongside `verification-protocol.md`, which states the rules, and the `validate_ev_record.py` script (shipped under `data/` in the skill share, or at `projects/nzipl/data/` in the NZIPL Lab repo), which enforces them.
+This document explains the design choices behind the gather-ev-greenfield skill: why three tiers, why the status-tier matrix is enforced mechanically, and how the skill resolves conflicts between company, government, and independent-press sources. Read alongside `verification-protocol.md`, which states the rules, and the `validate_ev_record.py` script (shipped under `data/` in the skill share, or at `projects/nzipl/infra-mx/data/` in the NZIPL Lab repo), which enforces them.
 
 ## Why a tiered evidence scheme
 

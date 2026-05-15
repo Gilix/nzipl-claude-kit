@@ -1,6 +1,6 @@
 ---
 name: gather-ev-greenfield
-description: "Grow and maintain the Lab's global EV FDI dataset. Use when the user asks to gather, verify, audit, or extend EV greenfield manufacturing records — gigafactories, cell/pack/cathode/anode/separator/electrolyte plants, EV assembly, motor/inverter/charger/recycling facilities — anywhere in the world. Primary invocation is gap-filling: 'add N records', 'fill gaps', 'verify next 10 announcements'. Also handles single-record verification and stale-record audits. Scope excludes upstream mining and refining. Writes to projects/nzipl/data/nzipl_ev_greenfield_global.json, enforced by projects/nzipl/data/validate_ev_record.py."
+description: "Grow and maintain the Lab's global EV FDI dataset. Use when the user asks to gather, verify, audit, or extend EV greenfield manufacturing records — gigafactories, cell/pack/cathode/anode/separator/electrolyte plants, EV assembly, motor/inverter/charger/recycling facilities — anywhere in the world. Primary invocation is gap-filling: 'add N records', 'fill gaps', 'verify next 10 announcements'. Also handles single-record verification and stale-record audits. Scope excludes upstream mining and refining. Writes to projects/nzipl/infra-mx/data/nzipl_ev_greenfield_global.json, enforced by projects/nzipl/infra-mx/data/validate_ev_record.py."
 ---
 
 # Gather EV FDI
@@ -13,10 +13,10 @@ Maintain a global, publicly-citable dataset of EV greenfield manufacturing inves
 
 > "Add 20 EV FDI records." "Fill the next 15 gaps." "Extend with recently-announced projects."
 
-1. **Load state** — read `projects/nzipl/data/nzipl_ev_greenfield_global.json` and `projects/nzipl/data/ev_fdi_seed.json` (~150 canonical candidates).
+1. **Load state** — read `projects/nzipl/infra-mx/data/nzipl_ev_greenfield_global.json` and `projects/nzipl/infra-mx/data/ev_fdi_seed.json` (~150 canonical candidates).
 2. **Pick gaps** — candidates in the seed list not yet in the global JSON, prioritized by `investmentM` and country coverage (avoid over-indexing on any single country unless the user asks). If seed is exhausted or user wants fresh projects, search trade press for the last 12 months.
 3. **Verify** — for each candidate, gather sources per `references/verification-protocol.md`. Minimum 1 URL; Tier 1 needs 3 distinct non-receipt URLs.
-4. **Write + validate** — append records to the global JSON. Run `python3 projects/nzipl/data/validate_ev_record.py <global.json>`. Exit non-zero = fix and re-run before reporting done.
+4. **Write + validate** — append records to the global JSON. Run `python3 projects/nzipl/infra-mx/data/validate_ev_record.py <global.json>`. Exit non-zero = fix and re-run before reporting done.
 
 ## Secondary invocations
 
@@ -50,7 +50,7 @@ Maintain a global, publicly-citable dataset of EV greenfield manufacturing inves
         ├── worked-example.md                 ← Training walkthrough
         └── common-mistakes.md                ← Append when you find a new recurring error
 
-projects/nzipl/data/
+projects/nzipl/infra-mx/data/
 ├── nzipl_ev_greenfield_global.json           ← The dataset (array of records)
 ├── ev_fdi_seed.json                          ← ~150 canonical candidates (starting pool)
 ├── validate_ev_record.py                     ← Run before every write
@@ -90,5 +90,5 @@ Invoke when the user says "training" or `target_count ≤ 20`: use `tasks/ev-gre
 ## Done
 
 - Target record count hit.
-- `python3 projects/nzipl/data/validate_ev_record.py projects/nzipl/data/nzipl_ev_greenfield_global.json` exits 0.
+- `python3 projects/nzipl/infra-mx/data/validate_ev_record.py projects/nzipl/infra-mx/data/nzipl_ev_greenfield_global.json` exits 0.
 - New records distributed across countries (not all one country) unless the user asked for a country-scoped batch.

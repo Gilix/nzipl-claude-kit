@@ -1,0 +1,37 @@
+{
+  "task": "EV Greenfield — Germany",
+  "assignee": "Gilberto Garcia-Vazquez",
+  "scope": "Germany EV greenfield manufacturing (cells, packs, vehicle assembly, cathode, motor/inverter, recycling, charging equipment), 2015-2026",
+  "target_count": 20,
+  "priority": "largest-investment-first",
+  "start_date": "2026-04-24",
+  "target_finish_date": "2026-04-24",
+  "candidates_found": 20,
+  "tier1": 18,
+  "tier2": 0,
+  "tier3": 2,
+  "dropped": 0,
+  "dedup_new": 14,
+  "dedup_update_bnef": 0,
+  "dedup_update_fdi": 6,
+  "dedup_update_both": 0,
+  "dedup_skipped": 0,
+  "next_candidate": "VARTA Ellwangen (existing cell plant, for tier audit) / Audi Ingolstadt PPE battery assembly / Valmet Kirchardt re-verify",
+  "last_updated": "2026-04-24",
+  "last_operator": "Gilberto Garcia-Vazquez",
+  "pair_review_complete": false,
+  "pair_reviewer": "",
+  "pair_review_date": "",
+  "batches": [
+    {
+      "date": "2026-04-24",
+      "records_added": 20,
+      "tier1": 18,
+      "tier2": 0,
+      "tier3": 2,
+      "operator": "Gilberto Garcia-Vazquez",
+      "reviewer": null,
+      "notes": "Seeded top-20 German EV greenfield projects largest-investment-first. Total committed investment: $27.6B USD. Mix: 9 cell (3 cancelled), 5 vehicle_assembly (all operating), 5 pack (1 under construction), 1 cathode. FDI dedup matches: Northvolt Heide (row 398), VW PowerCo Salzgitter (row 659), CATL Arnstadt (rows 78+85, two phases of same plant), Gotion Göttingen (row 222), Valmet/CATL Kirchardt (row 86), Kedali Erfurt (row 310). Excluded: CATL Bad Friedrichshall R&D (row 87), CATL Munich R&D (row 88), Samsung Munich R&D (row 459) — all R&D-only, out of manufacturing scope. Borg Warner Darmstadt (rows 56/57) and Leclanche Willstätt (row 326) omitted to stay within 20; should be added in next batch. Schema validated, status×tier compliant, postIRA consistent with 2022-08-16 threshold. Microvast Ludwigsfelde downgraded from Operating to Paused based on Grizzly Research 2024 observations of low utilization."
+    }
+  ]
+}

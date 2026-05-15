@@ -1,7 +1,7 @@
 # Schema reference
 
-Output file: `projects/nzipl/data/nzipl_ev_greenfield_global.json` (array of record objects).
-Validator: `projects/nzipl/data/validate_ev_record.py`.
+Output file: `projects/nzipl/infra-mx/data/nzipl_ev_greenfield_global.json` (array of record objects).
+Validator: `projects/nzipl/infra-mx/data/validate_ev_record.py`.
 
 ## Required typed fields (14)
 
@@ -122,7 +122,7 @@ The validator errors when any of these is present but inconsistent with the deri
 ## Run the validator
 
 ```bash
-python3 projects/nzipl/data/validate_ev_record.py projects/nzipl/data/nzipl_ev_greenfield_global.json
+python3 projects/nzipl/infra-mx/data/validate_ev_record.py projects/nzipl/infra-mx/data/nzipl_ev_greenfield_global.json
 ```
 
 Exit 0 = clean. Non-zero = fix and re-run. The validator replaces manual checklist walks.
