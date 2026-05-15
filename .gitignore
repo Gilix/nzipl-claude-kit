@@ -1,0 +1,9 @@
+# macOS metadata
+.DS_Store
+
+# Build / distribution artifacts (regenerate from source folders)
+*.zip
+
+# Keynote working files — large binaries, not reviewable as diffs.
+# Export to PDF and commit that instead if a deck needs to live in the kit.
+*.key
