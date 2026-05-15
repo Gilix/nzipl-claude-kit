@@ -1002,19 +1002,19 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
   <h2>What Claude is (and isn't)</h2>
   <p class="lead">Level-set before we talk about how we use it as a Lab.</p>
 
-  <p>Claude is a large language model. It reads what you give it, matches patterns against everything it was trained on, and generates text that continues the pattern. A useful framing: a very well-read generalist who joined the Lab yesterday. Smart, articulate, no institutional memory, has to be briefed every time.</p>
+  <p>Claude is an AI assistant that makes it easier to talk to a computer. You describe what you want in plain English &mdash; no code to write, no command syntax to memorize, no buried menus to navigate &mdash; and Claude translates that into the underlying work: reading files, pulling data, drafting text, running an analysis. Useful framing: a very well-read generalist who also speaks every technical language the Lab uses, joined yesterday, no institutional memory, has to be briefed every time.</p>
 
   <div class="two-col">
     <div>
       <div class="col-header" style="color: #56a360;">Good at</div>
       <div class="card">
         <div class="card-body">
-          Summarizing long documents<br>
-          Drafting prose in a given voice<br>
-          Translating between formats (prose &harr; outline, EN &harr; ES)<br>
-          Explaining unfamiliar concepts<br>
-          Brainstorming variations<br>
-          Structured analysis when you supply the structure
+          Turning a plain-English question into working code, a query, or an analysis<br>
+          Working with data you give it &mdash; summarizing, reshaping, comparing, spotting patterns<br>
+          Moving between formats (CSV &harr; JSON, table &harr; chart, prose &harr; outline, EN &harr; ES)<br>
+          Explaining unfamiliar concepts, codebases, or datasets in accessible terms<br>
+          Drafting a first version of almost anything, fast<br>
+          Structured reasoning when you supply the structure
         </div>
       </div>
     </div>
@@ -1023,7 +1023,7 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
       <div class="card">
         <div class="card-body">
           Facts after its training cutoff &mdash; confirm with a live source<br>
-          Exact arithmetic &mdash; use a calculator<br>
+          Exact arithmetic on anything nontrivial &mdash; have it write the calculation, don't trust the mental math<br>
           Citing specific papers without source material in front of it &mdash; will hallucinate references<br>
           Things you didn't tell it about &mdash; unpublished work, internal context, sensitive data<br>
           Replacing your judgment on contested questions
@@ -1049,9 +1049,9 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
   <div class="tip-row">
     <div class="tip-num">1</div>
     <div>
-      <div class="tip-title">Be specific about audience and format</div>
-      <span class="tip-weak">Write a headline.</span>
-      <span class="tip-strong">Write 5 headline options for a research brief aimed at ministry-of-economy staff, each under 12 words, emphasizing sequencing not prediction.</span>
+      <div class="tip-title">Be specific about the data and the output you want</div>
+      <span class="tip-weak">Analyze this data.</span>
+      <span class="tip-strong">Open <code>nzipl_mex_state_rca.json</code>. Return the top 5 states for EV Components by RCA, as a markdown table with state name, RCA, exports (USD), and product count. Sort descending.</span>
     </div>
   </div>
 
@@ -1059,8 +1059,8 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
     <div class="tip-num">2</div>
     <div>
       <div class="tip-title">Give context before the ask</div>
-      <span class="tip-weak">Is this good?</span>
-      <span class="tip-strong">This paragraph is from a brief for a DFI audience. They know economic complexity but not our methodology. Is the reasoning clear? What would a skeptical reader push back on?</span>
+      <span class="tip-weak">Is this pipeline right?</span>
+      <span class="tip-strong">This Python pipeline pulls DataMexico <code>/stats/rca</code> to get state-level manufacturing employment by SCIAN code. I'm worried the multi-month parameter isn't doing what I think. Walk me through what each request returns and where the aggregation happens.</span>
     </div>
   </div>
 
@@ -1068,17 +1068,17 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
     <div class="tip-num">3</div>
     <div>
       <div class="tip-title">Iterate &mdash; the first answer is a draft</div>
-      <span class="tip-weak">Write the intro and I'll use it.</span>
-      <span class="tip-strong">Draft the intro, then give me two variations &mdash; one more concrete, one more conceptual. I'll pick the one that fits and we'll tighten it.</span>
+      <span class="tip-weak">Build me a dashboard.</span>
+      <span class="tip-strong">First pass: a single HTML page with Leaflet, Mexico states shaded by RCA for grid hardware, using the design tokens from <code>nzipl-design</code>. Keep it minimal. We'll iterate on layers, filters, and click behavior after I see the base map.</span>
     </div>
   </div>
 
   <div class="tip-row">
     <div class="tip-num">4</div>
     <div>
-      <div class="tip-title">Ask it to cite and show reasoning</div>
-      <span class="tip-weak">Summarize this paper.</span>
-      <span class="tip-strong">Summarize this paper in 150 words. List the three main claims with the exact sentences that support each. Flag anything you're less sure about.</span>
+      <div class="tip-title">Ask it to cite its sources and show reasoning</div>
+      <span class="tip-weak">Why is Nuevo Le&oacute;n's RCA high?</span>
+      <span class="tip-strong">Using <code>nzipl_mex_state_rca.json</code>, explain Nuevo Le&oacute;n's RCA for grid hardware. Point to the specific HS6 products driving the score and the exports that anchor them. Flag anything ambiguous or anything that might be a data artifact.</span>
     </div>
   </div>
 
@@ -1086,8 +1086,8 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
     <div class="tip-num">5</div>
     <div>
       <div class="tip-title">Tell it what good looks like</div>
-      <span class="tip-weak">Make this better.</span>
-      <span class="tip-strong">Rewrite this to be closer to [paste example you like]. The original is too hedged; the rewrite should commit to a position while staying defensible.</span>
+      <span class="tip-weak">Make me a chart.</span>
+      <span class="tip-strong">Build a horizontal bar chart of the top 10 EV Components exporters by state using D3 v7. Match the chart style in <code>nzipl-playcard-mexico-ev-components.html</code> &mdash; dark background, green bars, Archivo font, animate on scroll using the observer pattern the other cards use.</span>
     </div>
   </div>
 
@@ -1180,24 +1180,24 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
   <span class="act-label">Act 1 &middot; Shared Context</span>
   <span class="marker"></span>
   <h2>Claude Code: the step beyond chat</h2>
-  <p class="lead">Claude Code runs in the terminal or IDE. It reads files, writes code, executes pipelines.</p>
+  <p class="lead">A version of Claude that lives on your computer, next to the files you work with every day. Point it at a project folder and it reads what's there, writes new files, and runs code for you &mdash; no copy-paste loop between a browser and your laptop.</p>
 
   <div class="card-grid">
     <div class="card">
-      <div class="card-label">Reads your repo</div>
-      <div class="card-note">Claude sees the codebase, data files, documentation. Understands project structure, not just what you paste.</div>
+      <div class="card-label">Reads your project folder</div>
+      <div class="card-note">Claude sees the data files, documentation, code, and deliverables in the folder. It understands the whole project, not just what you paste into a chat box.</div>
     </div>
     <div class="card">
-      <div class="card-label">Runs code</div>
-      <div class="card-note">Python pipelines, shell commands, data processing. Results come back into the conversation. No copy-paste loop.</div>
+      <div class="card-label">Runs code for you</div>
+      <div class="card-note">Python pipelines, data processing, small scripts. Results come back in the same conversation. You don't need to run anything yourself.</div>
     </div>
     <div class="card">
       <div class="card-label">Writes and edits files</div>
-      <div class="card-note">Generates HTML deliverables, updates JSON configs, creates charts. Output goes directly into the project.</div>
+      <div class="card-note">Generates HTML deliverables, updates JSON configs, creates charts. The output lands directly in the project folder &mdash; ready to open, share, or commit.</div>
     </div>
     <div class="card">
-      <div class="card-label">Loads context automatically</div>
-      <div class="card-note">A file called <code style="color:#7fc77f;">CLAUDE.md</code> at the root of any repo is read on session start. This is how we teach Claude about the Lab.</div>
+      <div class="card-label">Reads a briefing file on start</div>
+      <div class="card-note"><code style="color:#7fc77f;">CLAUDE.md</code> is a plain-text file at the top of the project folder. Think of it as the note the Lab leaves for any new analyst on their first day: data sources, vocabulary, methodology, what to watch out for. Claude reads it before you say anything, so every session starts already briefed.</div>
     </div>
   </div>
 
@@ -1504,18 +1504,37 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
   <span class="slide-num">18 / 27</span>
   <span class="act-label">Act 3 &middot; How the team adopts this</span>
   <span class="marker"></span>
-  <span class="demo-indicator">Recorded clip &middot; 60 sec</span>
+  <span class="demo-indicator">Live demo &middot; 2 min</span>
   <h2>Watch it happen</h2>
-  <p class="lead">Same prompt. Same person. Kit loaded or not. That is the entire difference.</p>
+  <p class="lead">Same prompt, two places. One has the kit loaded. One doesn't.</p>
 
-  <div class="video-placeholder">
-    <div class="play-icon">&#9654;</div>
-    <div class="video-title">demo-3-rca-compare.mp4</div>
-    <div class="video-caption">Left: Claude.ai with no context, "What is Mexico's RCA for grid hardware?" &rarr; generic answer. Right: Claude Code inside the kit, same prompt &rarr; RCA 3.02, $16.8B exports, top states (Nuevo Le&oacute;n, Sonora, Baja California), citations to play selector files.</div>
-    <div class="video-meta">slides/screencasts/demo-3-rca-compare.mp4</div>
+  <div class="prompt-box">
+    <div class="prompt-label">The prompt, both times</div>
+    What is Mexico's RCA for grid hardware?
   </div>
 
-  <p>No editing tricks. Single take each side. The right side is one person (me), one terminal, one prompt.</p>
+  <div class="two-col">
+    <div>
+      <div class="col-header" style="color: #c94a4a;">A volunteer &middot; Claude.ai, no context</div>
+      <div class="card">
+        <div class="card-body">
+          I'll ask one person in the room to open Claude.ai in a fresh browser, paste the prompt, and read the answer aloud.<br><br>
+          Expect: a general description of RCA, some high-level language about Mexico's industrial base, no specific numbers tied to our taxonomy.
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="col-header" style="color: #56a360;">Me &middot; Claude Code inside the kit</div>
+      <div class="card">
+        <div class="card-body">
+          I'll run the same prompt from the kit folder on my machine.<br><br>
+          Expect: RCA 3.02, $16.8B exports, top states (Nuevo Le&oacute;n, Sonora, Baja California), references to the underlying data file &mdash; because <code style="color:#7fc77f;">CLAUDE.md</code> briefed Claude on the Lab's methodology before the question was even asked.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>Same person could run either side. The only variable is whether the kit is loaded.</p>
 </section>
 
 <!-- SLIDE 19 (NEW D): Research use cases -->
@@ -1524,36 +1543,36 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
   <span class="act-label">Act 3 &middot; How the team adopts this</span>
   <span class="marker"></span>
   <h2>Research use cases</h2>
-  <p class="lead">Six workflow stages where a Lab-informed Claude actually helps.</p>
+  <p class="lead">Six workflow stages where a Lab-informed Claude earns its seat at the table.</p>
 
   <div class="card-grid">
     <div class="card">
-      <div class="card-label">Literature review</div>
-      <div class="card-body" style="font-size:0.82rem;">"Summarize these 8 papers. Find the three claims they agree on and the one they disagree about. List which papers support each."</div>
+      <div class="card-label">Data integration</div>
+      <div class="card-body" style="font-size:0.82rem;">"Pull this World Bank csv and this DataMexico file. Normalize the country codes, align on year, and produce a single tidy dataset we can use to compare EV components trade."</div>
     </div>
     <div class="card">
-      <div class="card-label">Data sense-making</div>
-      <div class="card-body" style="font-size:0.82rem;">"Why might Nuevo Le&oacute;n's RCA for grid hardware have dropped between 2019 and 2023? Check the kit's HS6 taxonomy for candidate explanations."</div>
+      <div class="card-label">Data analysis and sense-making</div>
+      <div class="card-body" style="font-size:0.82rem;">"Why might Nuevo Le&oacute;n's RCA for grid hardware have dropped between 2019 and 2023? Check the kit's HS6 taxonomy, flag the products doing most of the work, and propose two candidate explanations."</div>
     </div>
     <div class="card">
-      <div class="card-label">Drafting</div>
-      <div class="card-body" style="font-size:0.82rem;">"Draft the Findings section of the EV Components constraint map, using the voice of our published Mexico play cards. Keep it under 600 words."</div>
+      <div class="card-label">Visualization</div>
+      <div class="card-body" style="font-size:0.82rem;">"Suggest three chart types for comparing subnational RCA across 32 Mexican states for three plays. Build the strongest one in D3 using the Lab's design tokens."</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Rapid prototyping</div>
+      <div class="card-body" style="font-size:0.82rem;">"Sketch a one-page Leaflet map of Mexican industrial parks colored by net-zero readiness. Use <code>nzipl_industrial_parks.json</code>. Working prototype I can click through, no polish yet."</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Deep research</div>
+      <div class="card-body" style="font-size:0.82rem;">"Scan the last 18 months of published work on barriers to EV component manufacturing in Mexico. Summarize the three main arguments, name the most cited sources, and flag where the evidence is thin."</div>
     </div>
     <div class="card">
       <div class="card-label">Peer review of your own work</div>
       <div class="card-body" style="font-size:0.82rem;">"Read this draft. Where would an economist from a different school of thought push back? Where are my assumptions unexamined?"</div>
     </div>
-    <div class="card">
-      <div class="card-label">Visualization</div>
-      <div class="card-body" style="font-size:0.82rem;">"Suggest three chart types for comparing subnational RCA across 32 Mexican states for three plays. Explain which best fits the story."</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Translation</div>
-      <div class="card-body" style="font-size:0.82rem;">"Translate this abstract from English to Spanish, keeping the academic register and preserving technical terms (RCA, relatedness, plays)."</div>
-    </div>
   </div>
 
-  <p>Pick one. Try it next week against something on your actual plate.</p>
+  <p>Pick one. Try it next week against something already on your plate.</p>
 </section>
 
 <!-- SLIDE 20: Level 2 -->
@@ -1565,7 +1584,7 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
   <p class="lead">Run the analysis. Review the output. Refine what matters.</p>
 
   <div class="terminal-mock">
-    <div><span class="prompt">You:</span> <span class="cmd">/enrich-fdi</span> <span class="recorded-tag">recorded 2026-04-18</span></div>
+    <div><span class="prompt">You:</span> <span class="cmd">/enrich-fdi</span></div>
     <div style="margin-top:0.5rem;"><span class="output">Reading FDI_Combined.xlsx... 698 rows, columns P-W empty.</span></div>
     <div><span class="output">Starting batch 1 (rows 1-20). Searching for confirming articles...</span></div>
     <div><span class="output">Row 1: Tesla Gigafactory Monterrey - found Reuters, El Financiero, fDi Intelligence.</span></div>
@@ -1598,7 +1617,7 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
     </div>
     <div class="card">
       <div class="card-label">When a task recurs</div>
-      <div class="card-body">Draft a command following the <code style="color:#7fc77f;">/enrich-fdi</code> pattern. Save to <code style="color:#7fc77f;">.claude/commands/</code>. PR. Everyone can now run it.</div>
+      <div class="card-body">Draft a command following the <code style="color:#7fc77f;">/enrich-fdi</code> pattern. Save to <code style="color:#7fc77f;">.claude/commands/</code>. Everyone can now run it.</div>
     </div>
     <div class="card">
       <div class="card-label">When Claude misreads the kit</div>
@@ -1606,7 +1625,36 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
     </div>
   </div>
 
-  <p style="color:#909296; font-size:0.9rem;">Level 4 (scheduled agents for data freshness, consistency audits, deliverable QA) is real and running in other corners of this work. We'll explore it for the Lab later this year. Appendix has details.</p>
+  <h3 style="margin-top: 2rem; font-size: 1rem; color: #EAEAEA; font-weight: 600;">How you actually do it</h3>
+
+  <div class="two-col" style="margin-top: 0.75rem;">
+    <div>
+      <div class="col-header" style="color: #56a360;">Add a line to discoveries.md</div>
+      <div class="file-mock" style="margin: 0;">
+        <span class="filename">discoveries.md &middot; append at the bottom</span>
+        <div class="line"><span class="date">2026-04-21</span> | <span class="author">your-initials</span> | <span class="finding">The thing you learned, in one sentence</span></div>
+      </div>
+      <p style="font-size: 0.8rem; color: #909296; margin-top: 0.5rem; line-height: 1.5;">Open the file in any editor, type the line, save, push. If Git feels like a hurdle, ask Claude: "add this as a new entry in discoveries.md and commit it." Claude does the rest.</p>
+    </div>
+    <div>
+      <div class="col-header" style="color: #56a360;">Draft a command</div>
+      <div class="file-mock" style="margin: 0;">
+        <span class="filename">.claude/commands/your-command.md</span>
+        <div class="line"><span class="finding">---</span></div>
+        <div class="line"><span class="finding">description: One-line summary of what this does</span></div>
+        <div class="line"><span class="finding">---</span></div>
+        <div class="line"><span class="finding"></span></div>
+        <div class="line"><span class="finding">Plain-English instructions for Claude:</span></div>
+        <div class="line"><span class="finding">&middot; what file(s) to read</span></div>
+        <div class="line"><span class="finding">&middot; what steps to follow</span></div>
+        <div class="line"><span class="finding">&middot; what to produce</span></div>
+        <div class="line"><span class="finding">&middot; quality rules, fallbacks, edge cases</span></div>
+      </div>
+      <p style="font-size: 0.8rem; color: #909296; margin-top: 0.5rem; line-height: 1.5;">You can write this by hand, or ask Claude to draft it after you've run a task once manually: "turn what we just did into a reusable command." Save as <code style="color:#7fc77f;">/your-command</code>, anyone on the team can run it.</p>
+    </div>
+  </div>
+
+  <p style="color:#909296; font-size:0.9rem; margin-top: 1.5rem;">Level 4 (scheduled agents for data freshness, consistency audits, deliverable QA) is real and running in other corners of this work. We'll explore it for the Lab later this year. Appendix has details.</p>
 </section>
 
 <!-- SLIDE 22: Compounding -->
@@ -1708,7 +1756,7 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
     </div>
     <div class="timeline-item active">
       <div class="timeline-when">Week 3 &middot; First discoveries</div>
-      <div class="timeline-what">First Lab-wide <code style="color:#7fc77f;">discoveries.md</code> entry contributed by someone new. Celebrate it publicly &mdash; contribution momentum beats perfection.</div>
+      <div class="timeline-what">First Lab-wide <code style="color:#7fc77f;">discoveries.md</code> entry contributed by someone other than me.</div>
     </div>
     <div class="timeline-item active">
       <div class="timeline-when">Month 1 &middot; First pipeline</div>
@@ -1771,7 +1819,7 @@ html { scroll-snap-type: y proximity; scroll-behavior: smooth; }
     What question would you most want answered by a Lab-informed Claude? One sentence.
   </div>
 
-  <p>Give it 90 seconds. I'll read 3-4 aloud. The answers stay in the chat so everyone sees them &mdash; and they become the first entries in the list of things we prove the kit can do, once it's available to the team.</p>
+  <p>Your answers become the first test cases for the kit &mdash; the list of questions a Lab-informed Claude should be able to answer once the team has access.</p>
 
   <p style="color:#7fc77f; font-size:0.95rem; margin-top: 1rem;">Questions &rarr;</p>
 </section>
