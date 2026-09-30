@@ -1,6 +1,6 @@
 ---
 name: merge-fdi-sources
-description: "Second-pass enrichment for FDI projects. Merges sources from a curated list into the master FDI_All_ToSource.xlsx. Auto-detects between two supported curated formats: a China_FDI_<Tech>.xlsx (Chinese-parent rows, matched by HAR ID) and a Globa_FDI_<Tech>_Manual.xlsx (non-HAR rows, matched by FDI ID). Use when the user asks to 'apply China sources', 'merge the manual battery list', or runs any post-SKILL sourcing round. Honors strict precedence: SKILL-found URLs in FDI_All_ToSource win over curated URLs (even when tagged [UNVERIFIED]); curated URLs only replace cells that say 'fDi Markets (FT)'. Reconciles Capital Investment (column L) to whichever source is ultimately cited in column S. Optional stage-2 pass (`--stage2`) tops up column Q for rows that didn't meet first-best, then marks any still-uncited Source (Amount) cells with 'Investment value not publicly disclosed' so they remain count-regression eligible. Optional stage-3 pass (`--stage3`) performs cross-ID-class dedup (HAR vs FDI vs Manual) and adds a Project Stage column that numbers same-company / same-city / close-year rows as phases of one project."
+description: "Second-pass enrichment for FDI projects. Merges sources from a curated list into the master FDI_All_ToSource.xlsx. Auto-detects between two supported curated formats: a China_FDI_<Tech>.xlsx (Chinese-parent rows, matched by HAR ID) and a Globa_FDI_<Tech>_Manual.xlsx (non-HAR rows, matched by FDI ID). Use when the user asks to 'apply China sources', 'merge the manual battery list', or runs any post-SKILL sourcing round. Honors strict precedence: SKILL-found URLs in FDI_All_ToSource win over curated URLs (even when tagged [UNVERIFIED]); curated URLs only replace cells that say 'fDi Markets (FT)'. Reconciles Capital Investment (column L) to whichever source is ultimately cited in column S. Optional stage-2 pass (`--stage2`) tops up column Q for rows that didn't meet first-best, then marks any still-EMPTY Source (Amount) cells with 'Investment value not publicly disclosed' (fDi Markets (FT) estimates are kept) so they remain count-regression eligible. Optional stage-3 pass (`--stage3`) performs cross-ID-class dedup (HAR vs FDI vs Manual) and adds a Project Stage column that numbers same-company / same-city / close-year rows as phases of one project."
 ---
 
 # Merge FDI Sources
@@ -33,7 +33,7 @@ Detection runs on the first 200 rows of column 1 — whichever prefix dominates 
 
 ## Highlight convention
 
-Every cell this skill writes to (column L or any of P–W) gets a yellow `PatternFill` (`FFFFFF00`), matching the convention from `/source-solar-wind-battery-fdi`. This makes the second-round merge visually distinguishable in review.
+No cell highlighting (project convention since 2026-09-28): every change is printed in the change log instead. Letters L and P–W in this document are logical labels for Capital Investment and the eight Source columns; the script finds them in the master BY HEADER NAME, because positions shift whenever the master gains a column. After saving, the script runs `bin/validate_master.py` from the master's repo if present.
 
 ## Workflow
 
@@ -77,7 +77,7 @@ Investment value not publicly disclosed
 
 **Also clear column L (Capital Investment)** on the same row. Rationale: the original L value came from the fDi Markets export and was implicitly attributed to FT via `S = "fDi Markets (FT)"`. Once we disown the amount source via the disclosure note, L can no longer be credibly cited as that number, so we drop it to keep L and S consistent. The cleared L is reported in the change log.
 
-The investment exists (Q is a real source for the project status) but the amount is unknown. Marking S this way distinguishes "we know this project exists, amount unknown" (count-regression eligible) from "we couldn't verify anything" (drop). Yellow highlight on both S and the cleared L.
+The investment exists (Q is a real source for the project status) but the amount is unknown. Marking S this way distinguishes "we know this project exists, amount unknown" (count-regression eligible) from "we couldn't verify anything" (drop). Cells that already say `fDi Markets (FT)` are left alone: fDi capex estimates are kept (only the $39.9m placeholder is rejected), so this pass only fills an EMPTY S.
 
 The validator (`validate_fdi_sources.py`) recognizes the disclosure literal as valid in column S only.
 
@@ -227,6 +227,6 @@ python3 source-solar-wind-battery-fdi/validate_fdi_sources.py /path/to/FDI_All_T
 - Column L reconciled where S was replaced and the curated row provided a number.
 - If `--stage2` was set: relaxed Q-fill applied for non-first-best rows in scope, and disclosure note applied to S where Q is now credible.
 - If `--stage3` was set: cross-ID-class duplicates resolved per the rules above; `Project Stage` column written; `\ ` cleanup applied; sheet re-sorted; dedup CSVs emitted alongside the master.
-- Yellow highlight applied to every changed cell (stage 1 + 2 only — stage 3 deletions are reported, not highlighted).
+- No highlighting; every changed cell is listed in the printed change log.
 - `validate_fdi_sources.py` exits 0 (recognizes `Investment value not publicly disclosed` in column S).
 - Change log includes: rows updated, rows skipped (curated lacks the source), curated IDs with no master match, (if stage 2) per-row Q fills and S disclosure-note assignments, and (if stage 3) per-row drops with partner ID and per-row stage assignments.

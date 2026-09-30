@@ -1,11 +1,21 @@
 ---
 name: source-solar-wind-battery-fdi
-description: "Enrich the Lab's clean-energy FDI dataset (Solar / Wind / Battery projects) with publicly citable source URLs. Use when the user asks to source, enrich, verify, or audit FDI rows. Primary invocation is batch enrichment: 'source the next 20 rows', 'enrich largest 50', 'audit rows 100–150'. Reads xlsx, finds rows missing citations in columns P–W, fills them with Tier A / Tier B URLs only — wikipedia.org, social media, and PR-wire-only sources are hard-rejected. Also dedups Chinese-parent rows (drops non-HAR ID when a HAR ID describes the same project) and reconciles A–O cells against source (preferring source; highlights changed cells in yellow). Validator at validate_fdi_sources.py."
+description: "Enrich the Lab's clean-energy FDI dataset (Solar / Wind / Battery projects) with publicly citable source URLs. Use when the user asks to source, enrich, verify, or audit FDI rows. Primary invocation is batch enrichment: 'source the next 20 rows', 'enrich largest 50', 'audit rows 100–150'. Reads xlsx, finds rows missing citations in columns P–W, fills them with Tier A / Tier B URLs only — wikipedia.org, social media, and PR-wire-only sources are hard-rejected. Also dedups Chinese-parent rows (drops non-HAR ID when a HAR ID describes the same project) and reconciles A–O cells against source (preferring source; changes logged, not highlighted). Validator at validate_fdi_sources.py."
 ---
 
 # Source Solar / Wind / Battery FDI
 
-Enrich a clean-energy FDI xlsx with per-row source URLs **and reconcile A–O cells against those sources.** The web source is the source of truth; the Excel data (originally from fDi Markets) is the starting hypothesis. When they disagree, update the Excel cell and highlight the change in yellow.
+Enrich a clean-energy FDI xlsx with per-row source URLs **and reconcile A–O cells against those sources.** The web source is the source of truth; the Excel data (originally from fDi Markets) is the starting hypothesis. When they disagree, update the Excel cell (no highlighting; log the reason).
+
+> **Writing to the LCT-FDI master (`FDI_All_ToSource.xlsx`) — rules since 2026-09-29**
+> - Column letters in this skill (A–O, L, P–W) are **logical labels from the original 24-column layout, not positions.** The master now has 28 columns (Expansion, Phase, Joint Venture Local State were added), so the letters no longer match. Always address columns **by header name**.
+> - Make every write through `LCT-FDI/bin/master_io.py` (`MasterEdit`). It backs up the file, refuses any cell change you did not request, rejects edits that add validator errors, and logs to `data_changes_log.csv`. Never write the file with ad-hoc openpyxl or pandas code.
+> - **No yellow highlighting.** Record the reason in the `why=` of each edit instead.
+> - `fDi Markets (FT)` capex estimates are kept as amounts. Reject only the $39.9m placeholder. Prefer a public figure when you find one.
+> - An amount with no source → leave it blank and set Source (Amount) to exactly `Investment value not publicly disclosed`.
+> - Acquisitions (including minority stakes, and ICE→EV plant retooling) count as FDI; BESS factories are Battery; a whole-value-chain figure that can't be split stays on the project in full.
+> - Never take an amount or URL from a neighbouring row. Every URL must be about THIS row's firm and project; `bin/validate_master.py` (rules R12/R13) flags cross-firm URLs.
+
 
 The defining principle: **prefer primary channels; never cite tertiary summaries.** This skill follows the same sourcing tiers as `/gather-ev-greenfield`. Wikipedia, social media, and self-published platforms are rejected even if they are the only result.
 
@@ -23,7 +33,7 @@ The defining principle: **prefer primary channels; never cite tertiary summaries
 2. **Load state** — open the xlsx with `openpyxl`. Read `tasks/enrich-fdi-progress.json` to find `next_unsourced_row`.
 3. **Pick the batch** — rows where columns P–W are all empty, sorted by user priority (`largest` by Capital Investment, `newest` by Year Announced, `sequential` by row number). Default batch size: 20.
 4. **Verify each row** — gather sources per `references/verification-protocol.md`. Tier A primary preferred; Tier B trade press to corroborate. Forbidden domains never cited (see `references/sources.md`).
-5. **Reconcile A–O against source** — when the source contradicts a cell in columns A–O, update the cell to match the source and apply a yellow `PatternFill` (`FFFFFF00`) to mark it as changed. The web source is preferred over the original fDi Markets data. See `references/reconciliation.md` for which fields are reconcilable and how to handle ambiguous cases. Capital Investment (column L) is the most common reconciliation target.
+5. **Reconcile A–O against source** — when the source contradicts a cell in columns A–O, update the cell to match the source (through `master_io`, with the reason in `why=`; no highlighting). The web source is preferred over the original fDi Markets data. See `references/reconciliation.md` for which fields are reconcilable and how to handle ambiguous cases. Capital Investment (column L) is the most common reconciliation target.
 6. **Write + validate** — save the xlsx after each batch. Run `python3 validate_fdi_sources.py <file.xlsx>`. Exit non-zero = fix and re-run before reporting done.
 7. **Log** — update `tasks/enrich-fdi-progress.json` (counters + new `batches[]` entry with notes on fallbacks and a list of A–O cells changed during reconciliation).
 
@@ -38,7 +48,7 @@ The defining principle: **prefer primary channels; never cite tertiary summaries
 
 ## Workflow constraints
 
-- **Reconcile A–O against source.** When the cited source contradicts a cell in columns A–O, update the cell to match the source and apply a yellow `PatternFill` (`FFFFFF00`). Source > Excel. Capital Investment (column L) is the most frequently reconciled field. See `references/reconciliation.md` for per-column rules.
+- **Reconcile A–O against source.** When the cited source contradicts a cell in columns A–O, update the cell to match the source (logged, not highlighted). Source > Excel. Capital Investment (column L) is the most frequently reconciled field. See `references/reconciliation.md` for per-column rules.
 - **Never cite** `wikipedia.org`, `grokipedia.com`, `linkedin.com`, `reddit.com`, `twitter.com`, `x.com`, `facebook.com`, `instagram.com`, `medium.com`. The validator hard-rejects these.
 - **Never write a non-URL value** to P–W except the explicit fallback `fDi Markets (FT)`. Empty cells are preferred over forbidden citations.
 - **Disambiguate the facility.** Every URL must distinguish the specific city / permit / JV brand named in columns C–G. Generic "Company X expanding in Country Y" is not a valid R citation.
@@ -63,7 +73,7 @@ source-solar-wind-battery-fdi/
 ## Reading budget
 
 Three files, ~15 minutes:
-1. `references/schema.md` — column map A–W, what URL goes where, date formatting, yellow-highlight convention
+1. `references/schema.md` — column map A–W, what URL goes where, date formatting (letters are logical labels; write by header name)
 2. `references/verification-protocol.md` — tier matrix + status × tier rule
 3. `references/reconciliation.md` — which A–O cells to update from source, dedup rule for Chinese-parent HAR pairs
 
@@ -91,7 +101,7 @@ Three files, ~15 minutes:
 
 - Dedup pass run (Chinese-parent HAR/non-HAR duplicates resolved).
 - Target row count sourced.
-- A–O cells reconciled against source where they conflicted (changed cells filled yellow).
+- A–O cells reconciled against source where they conflicted (changes logged in data_changes_log.csv).
 - `python3 validate_fdi_sources.py <file.xlsx>` exits 0.
 - `tasks/enrich-fdi-progress.json` updated with new batch entry, totals, and a list of A–O cells changed during reconciliation.
 - Rows that fell back to `fDi Markets (FT)` are noted in the batch entry's `notes` field with the search passes attempted.

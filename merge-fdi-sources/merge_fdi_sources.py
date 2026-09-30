@@ -21,23 +21,43 @@ Precedence rules (identical for both inputs):
      value, update master L too.
   4. Empty master cells are not replaced (this skill does not invent sources).
 
-Yellow PatternFill (FFFFFF00) is applied to every changed cell.
+No cell highlighting (project convention since 2026-09-28); every change is printed in the change log.
 """
 import argparse
 import sys
 import openpyxl
-from openpyxl.styles import PatternFill
 
-YELLOW = PatternFill(start_color="FFFFFF00", end_color="FFFFFF00", fill_type="solid")
 FALLBACK = "fDi Markets (FT)"
 DISCLOSURE_NOTE = "Investment value not publicly disclosed"
 
-MASTER_SOURCE_COLS = {"P": 16, "Q": 17, "R": 18, "S": 19, "T": 20, "U": 21, "V": 22, "W": 23}
-MASTER_Q_COL = 17
-MASTER_S_COL = 19
-MASTER_L_COL = 12
-MASTER_ID_COL = 2
-MASTER_SECTOR_COL = 1
+# Master columns are resolved BY HEADER NAME when the workbook is opened (resolve_master_cols).
+# The letters below are logical labels only. Hard-coded positions broke silently when the
+# master gained Expansion / Phase / Joint Venture Local State: "S" stopped being Source (Amount).
+MASTER_COL_NAMES = {
+    "P": "Source (Parent company name and HQ)",
+    "Q": "Source (Project Status)",
+    "R": "Source (Project location, country and city)",
+    "S": "Source (Amount)",
+    "T": "Source (Ownership share, where available)",
+    "U": "Source (Date Announced [MM/DD/YYYY])",
+    "V": "Source (Date Completed [MM/DD/YYYY])",
+    "W": "Source (Industry Activity)",
+}
+MASTER_SOURCE_COLS = MASTER_Q_COL = MASTER_S_COL = MASTER_L_COL = MASTER_ID_COL = MASTER_SECTOR_COL = None
+
+
+def resolve_master_cols(ws):
+    """Bind the MASTER_* column indices from the header row; exit if any is missing."""
+    global MASTER_SOURCE_COLS, MASTER_Q_COL, MASTER_S_COL, MASTER_L_COL, MASTER_ID_COL, MASTER_SECTOR_COL
+    hdr = {str(c.value).strip(): c.column for c in ws[1] if c.value is not None}
+    need = list(MASTER_COL_NAMES.values()) + ["Capital Investment (US$m)", "Project ID", "Sector"]
+    missing = [n for n in need if n not in hdr]
+    if missing:
+        sys.exit(f"Master is missing columns {missing}; refusing to write by position.")
+    MASTER_SOURCE_COLS = {L: hdr[n] for L, n in MASTER_COL_NAMES.items()}
+    MASTER_Q_COL, MASTER_S_COL = MASTER_SOURCE_COLS["Q"], MASTER_SOURCE_COLS["S"]
+    MASTER_L_COL = hdr["Capital Investment (US$m)"]
+    MASTER_ID_COL, MASTER_SECTOR_COL = hdr["Project ID"], hdr["Sector"]
 
 LAYOUTS = {
     "china": {
@@ -117,11 +137,14 @@ def s_is_first_best(v):
 
 
 def s_needs_disclosure(v):
-    """S is FT or empty — eligible for the disclosure note when Q is credible."""
+    """S is empty — eligible for the disclosure note when Q is credible.
+
+    'fDi Markets (FT)' is NOT eligible: since 2026-09-29 fDi capex estimates are kept as
+    amounts labelled 'fDi Markets (FT)' (only the $39.9m placeholder is rejected), so this pass
+    must not overwrite that label or clear the amount behind it."""
     if v is None:
         return True
-    s = str(v).strip()
-    return s == "" or s == FALLBACK
+    return str(v).strip() == ""
 
 
 def stage2_pass(ws_m, ws_c, layout, sector_filter):
@@ -171,7 +194,6 @@ def stage2_pass(ws_m, ws_c, layout, sector_filter):
         if not is_real_url(cval, empty):
             continue
         q_cell.value = cval
-        q_cell.fill = YELLOW
         q_filled.append((r, str(pid).strip(), str(cval)[:60]))
 
     # (b) Disclosure-note pass on S — also clear L (Capital Investment).
@@ -186,13 +208,11 @@ def stage2_pass(ws_m, ws_c, layout, sector_filter):
         if not is_credible_url(ws_m.cell(r, MASTER_Q_COL).value):
             continue
         s_cell.value = DISCLOSURE_NOTE
-        s_cell.fill = YELLOW
         l_cell = ws_m.cell(r, MASTER_L_COL)
         old_l = l_cell.value
         l_cleared = False
         if old_l is not None and str(old_l).strip() != "":
             l_cell.value = None
-            l_cell.fill = YELLOW
             l_cleared = True
         s_disclosed.append((r, str(ws_m.cell(r, MASTER_ID_COL).value).strip(), old_l if l_cleared else None))
 
@@ -204,6 +224,7 @@ def merge(master_path, curated_path, sheet_name, layout_hint, limit, run_stage2,
     if "All" not in wb_m.sheetnames:
         sys.exit(f"Master file missing sheet 'All': {master_path}")
     ws_m = wb_m["All"]
+    resolve_master_cols(ws_m)
 
     wb_c = openpyxl.load_workbook(curated_path, data_only=True)
     if sheet_name and sheet_name in wb_c.sheetnames:
@@ -287,7 +308,6 @@ def merge(master_path, curated_path, sheet_name, layout_hint, limit, run_stage2,
                 if not is_real_url(cval, empty):
                     continue
                 cell.value = cval
-                cell.fill = YELLOW
                 marker = "DISCLOSED" if old == DISCLOSURE_NOTE else "FT"
                 row_changes.append(f"{letter}({mcol}): {marker} -> {str(cval)[:60]}")
                 if letter == "S":
@@ -300,7 +320,6 @@ def merge(master_path, curated_path, sheet_name, layout_hint, limit, run_stage2,
                     old_l = to_number(l_cell.value, empty)
                     if old_l != new_l:
                         l_cell.value = new_l
-                        l_cell.fill = YELLOW
                         row_changes.append(f"L: {old_l} -> {new_l}")
 
             processed += 1
@@ -311,6 +330,7 @@ def merge(master_path, curated_path, sheet_name, layout_hint, limit, run_stage2,
     else:
         q_filled, s_disclosed = [], []
     wb_m.save(master_path)
+    run_master_validator(master_path)
 
     print("\n=== Change log ===")
     if not log:
@@ -341,6 +361,17 @@ def merge(master_path, curated_path, sheet_name, layout_hint, limit, run_stage2,
             r, pid, cleared_l = entry
             tail = f" (L cleared: was {cleared_l})" if cleared_l is not None else ""
             print(f"  row {r} {pid}{tail}")
+
+
+def run_master_validator(master_path):
+    """If the master's repo ships bin/validate_master.py, run it and show the result."""
+    import os, subprocess
+    v = os.path.join(os.path.dirname(os.path.abspath(master_path)), "bin", "validate_master.py")
+    if os.path.exists(v):
+        print("\n=== Master validator ===")
+        rc = subprocess.run([sys.executable, v, master_path]).returncode
+        if rc:
+            print("Validator reported ERRORs: review before committing (the pre-commit hook will block).")
 
 
 def main():

@@ -26,7 +26,19 @@ FORBIDDEN_HOSTS = {
     "medium.com",
 }
 
-SOURCE_COLUMNS = ["P", "Q", "R", "S", "T", "U", "V", "W"]
+# Logical labels -> master header names. Columns are found BY NAME in the header row, because
+# positions shift whenever the master gains a column (they moved in 2026-06 and 2026-09).
+SOURCE_NAMES = {
+    "P": "Source (Parent company name and HQ)",
+    "Q": "Source (Project Status)",
+    "R": "Source (Project location, country and city)",
+    "S": "Source (Amount)",
+    "T": "Source (Ownership share, where available)",
+    "U": "Source (Date Announced [MM/DD/YYYY])",
+    "V": "Source (Date Completed [MM/DD/YYYY])",
+    "W": "Source (Industry Activity)",
+}
+SOURCE_COLUMNS = list(SOURCE_NAMES)
 DATE_COLUMNS = {"U", "V"}
 FALLBACK_LITERAL = "fDi Markets (FT)"
 UNVERIFIED_PREFIX = "[UNVERIFIED] "
@@ -100,23 +112,21 @@ def validate_cell(col: str, value) -> list[str]:
 
 def main(path: str) -> int:
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
-    ws = wb.active
+    ws = wb["All"] if "All" in wb.sheetnames else wb.active
     errors: list[str] = []
 
-    header_row = next(ws.iter_rows(min_row=1, max_row=1, values_only=False))
-    col_letter = {cell.column_letter: cell.column_letter for cell in header_row}
-    target_cols = [c for c in SOURCE_COLUMNS if c in col_letter]
-    if len(target_cols) < len(SOURCE_COLUMNS):
-        missing = set(SOURCE_COLUMNS) - set(target_cols)
-        print(f"warning: columns missing from sheet: {sorted(missing)}", file=sys.stderr)
+    header = [None if c is None else str(c).strip() for c in next(ws.iter_rows(min_row=1, max_row=1, values_only=True))]
+    idx = {label: header.index(name) for label, name in SOURCE_NAMES.items() if name in header}
+    if len(idx) < len(SOURCE_NAMES):
+        missing = [SOURCE_NAMES[l] for l in SOURCE_NAMES if l not in idx]
+        print(f"error: source columns missing from sheet: {missing}", file=sys.stderr)
+        return 2
 
-    for row in ws.iter_rows(min_row=2, values_only=False):
-        for cell in row:
-            if cell.column_letter not in SOURCE_COLUMNS:
-                continue
-            row_errors = validate_cell(cell.column_letter, cell.value)
-            for err in row_errors:
-                errors.append(f"row {cell.row}, {err}")
+    for r, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
+        for label, i in idx.items():
+            v = row[i] if i < len(row) else None
+            for err in validate_cell(label, v):
+                errors.append(f"row {r}, [{SOURCE_NAMES[label]}] {err}")
 
     if errors:
         for e in errors:

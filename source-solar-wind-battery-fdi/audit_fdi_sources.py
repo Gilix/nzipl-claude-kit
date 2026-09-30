@@ -22,7 +22,13 @@ import sys
 import openpyxl
 from openpyxl.utils import get_column_letter
 
-SOURCE_COLUMNS = ["P", "Q", "R", "S", "T", "U", "V", "W"]
+SOURCE_NAMES = [  # found BY NAME: positions shift when the master gains columns
+    "Source (Parent company name and HQ)", "Source (Project Status)",
+    "Source (Project location, country and city)", "Source (Amount)",
+    "Source (Ownership share, where available)", "Source (Date Announced [MM/DD/YYYY])",
+    "Source (Date Completed [MM/DD/YYYY])", "Source (Industry Activity)",
+]
+SOURCE_COLUMNS = SOURCE_NAMES
 
 
 def is_filled(value) -> bool:
@@ -34,11 +40,15 @@ def is_filled(value) -> bool:
 
 def audit(path: str) -> dict:
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
-    ws = wb.active
+    ws = wb["All"] if "All" in wb.sheetnames else wb.active
 
     fully, partial, none = [], [], []
     partial_detail = {}
-    src_indices = [(get_column_letter(i), i - 1) for i in range(16, 24)]  # P-W
+    header = [None if c is None else str(c).strip() for c in next(ws.iter_rows(min_row=1, max_row=1, values_only=True))]
+    missing = [n for n in SOURCE_NAMES if n not in header]
+    if missing:
+        sys.exit(f"source columns missing from sheet: {missing}")
+    src_indices = [(n, header.index(n)) for n in SOURCE_NAMES]
 
     for row_idx, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
         filled_cols = [

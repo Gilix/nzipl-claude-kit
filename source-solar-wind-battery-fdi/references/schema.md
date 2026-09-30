@@ -1,3 +1,5 @@
+> **Note (2026-09-29):** the letters below describe the ORIGINAL 24-column layout. The LCT-FDI master now has 28 columns (Expansion after Capital Investment; Phase after Expansion; Joint Venture Local State after Joint Venture Local), so positions have shifted. Read and write columns **by header name**, through `LCT-FDI/bin/master_io.py`. No yellow highlighting.
+
 # Schema
 
 The xlsx has fixed columns A–W. Columns A–O are project data (originate from fDi Markets, **reconcilable against source** — see `reconciliation.md`). Columns P–W are citation URLs added by this task.
