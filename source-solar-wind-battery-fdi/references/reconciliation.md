@@ -41,7 +41,7 @@ Reconcile only when the source unambiguously contradicts the cell. Don't reconci
 | B | Project ID | No | fDi Markets / HAR ID is an identifier; do not change. |
 | C | Parent company | Yes | If source uses canonical full name (e.g. `Contemporary Amperex Technology (CATL)` vs `CATL`), prefer the form used in source. Don't rewrite for spelling variants only. |
 | D | Company Country (HQ) | Yes | If source HQ disagrees, update. (E.g. parent listed as a subsidiary in one country but HQ is elsewhere.) |
-| E | Project Status | Yes | Most-current status from source wins: `Cancelled` > `Operational` / `Completed` > `Commenced` > `Announced`. If a 2025 article says cancelled and the cell says commenced, update to `Cancelled`. |
+| E | Project Status | Yes | Most-current status from source wins: `Cancelled` > `Operational` / `Completed` > `Under Construction` > `Announced` (`Commenced` retired 2026-10-01; use `Under Construction`; a plant whose building is finished — even if only in trial production — is `Completed`). If a 2025 article says cancelled and the cell says under construction, update to `Cancelled`. |
 | F | Destination Country | Yes | Source disagrees → update. Rare. |
 | G | Destination city | Yes | Source names a more specific city → update. Don't replace city with region. |
 | H | Year Announced | Yes | Source has a precise announcement date and the year differs → update to source year. |
